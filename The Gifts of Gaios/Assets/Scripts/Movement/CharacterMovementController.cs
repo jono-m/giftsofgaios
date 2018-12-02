@@ -11,6 +11,9 @@ public class CharacterMovementController : MonoBehaviour {
     public float jumpDecayRate;
     public float gravity;
 
+    public float slowedTime;
+    public float slowedTimeLerp;
+
     public float dashSpeed;
     public float dashDistance;
 
@@ -39,6 +42,14 @@ public class CharacterMovementController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(PlayerChoices.Instance.canSlowTime) {
+            float goalTime = 1.0f;
+            if(Input.GetKey(KeyCode.LeftControl) || Input.GetMouseButton(1)) {
+                goalTime = slowedTime;
+            }
+            Time.timeScale = Mathf.MoveTowards(Time.timeScale, goalTime, slowedTimeLerp * Time.deltaTime);
+        }
+
         float hVelocity = 0.0f;
 
         if (isKnockedBack) {
@@ -63,13 +74,21 @@ public class CharacterMovementController : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash) {
                 Vector2 moveDirection = (facingLeft ? Vector2.left : Vector2.right);
                 float moveDistance = dashDistance;
-                foreach (RaycastHit2D hit in Physics2D.RaycastAll(transform.position, moveDirection.normalized, dashDistance)) {
-                    if (!hit.collider.isTrigger && hit.collider.gameObject != gameObject) {
-                        moveDistance = Mathf.Min(moveDistance, hit.distance);
-                        break;
+                float radius = GetComponent<Collider2D>().bounds.size.x / 2.0f;
+                bool anythingAtEnd = false;
+                foreach (Collider2D collider in Physics2D.OverlapPointAll((Vector2)transform.position + moveDirection.normalized * dashDistance)) {
+                    if (!collider.isTrigger && collider.gameObject != gameObject) {
+                        anythingAtEnd = true;
                     }
                 }
-                rb.MovePosition((Vector2)transform.position + moveDirection * moveDistance);
+                if (anythingAtEnd) {
+                    foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, radius, moveDirection.normalized, dashDistance)) {
+                        if (!hit.collider.isTrigger && hit.collider.gameObject != gameObject) {
+                            moveDistance = hit.distance;
+                        }
+                    }
+                }
+                rb.transform.position = (Vector2)transform.position + moveDirection * moveDistance;
             }
 
             if (!IsGrounded()) {

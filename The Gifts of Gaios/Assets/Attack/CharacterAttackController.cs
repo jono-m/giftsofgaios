@@ -42,7 +42,7 @@ public class CharacterAttackController : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmosSelected() {
         if(behavior != null) {
             behavior.DrawAttackGizmos(this);
             weapon.DrawAttackGizmos(this);

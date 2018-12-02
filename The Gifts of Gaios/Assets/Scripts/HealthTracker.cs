@@ -11,6 +11,7 @@ public class HealthTracker : MonoBehaviour {
     public float invulnerabilityTime;
 
     public UnityEvent OnDamageTaken;
+    public UnityEvent OnDie;
 
     private float lastDamageTakenTime = Mathf.NegativeInfinity;
 
@@ -22,10 +23,14 @@ public class HealthTracker : MonoBehaviour {
         if (Time.time - lastDamageTakenTime >= invulnerabilityTime) {
             currentHealth -= damage;
             if (currentHealth <= 0) {
-                Destroy(gameObject);
+                OnDie.Invoke();
             }
             OnDamageTaken.Invoke();
             lastDamageTakenTime = Time.time;
         }
+    }
+
+    public void DestroyHealthObject() {
+        Destroy(gameObject);
     }
 }

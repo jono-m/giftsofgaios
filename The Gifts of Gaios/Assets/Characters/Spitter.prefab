@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 223386054314621668}
   - component: {fileID: 114595680223300078}
   - component: {fileID: 114756843703046200}
-  m_Layer: 0
+  - component: {fileID: 114510680196496248}
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +38,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4314111336269156}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MouthPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4947038866114714}
   - component: {fileID: 212841812049989402}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +72,7 @@ GameObject:
   - component: {fileID: 222005936372666014}
   - component: {fileID: 114086315655506668}
   - component: {fileID: 114372739012476392}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TextMeshPro Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +93,7 @@ GameObject:
   - component: {fileID: 114222957591516768}
   - component: {fileID: 50862480867283166}
   - component: {fileID: 114043336841283514}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +110,7 @@ GameObject:
   - component: {fileID: 224812192644416404}
   - component: {fileID: 222862641414784824}
   - component: {fileID: 114776652368136230}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +124,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1752303641720354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.77, y: -0.208, z: 0}
+  m_LocalPosition: {x: 22.45, y: -4.850001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4947038866114714}
@@ -217,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackerToDisplay: {fileID: 114546035679828396}
+  trackGaios: 0
 --- !u!114 &114222957591516768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,6 +359,17 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114510680196496248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1077848291489148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacc5f57a2a6d1844af03108aecb69b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114546035679828396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -368,11 +381,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7d8a78ff7142e408e2874a2cc4969b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   invulnerabilityTime: 0
   OnDamageTaken:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114546035679828396}
+        m_MethodName: DestroyHealthObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114595680223300078
@@ -424,7 +453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.14509805}
+  m_Color: {r: 0.01886791, g: 0, b: 0, a: 0.8666667}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

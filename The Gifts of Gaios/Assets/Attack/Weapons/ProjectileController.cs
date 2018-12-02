@@ -16,7 +16,7 @@ public class ProjectileController : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-        rb.velocity += Vector2.down * weaponInfo.gravity * Time.deltaTime;
+        rb.velocity += Vector2.down * weaponInfo.gravity * Time.fixedDeltaTime;
         transform.right = rb.velocity.normalized;
         if(Time.fixedTime - spawnTime >= weaponInfo.lifetime) {
             Destroy(gameObject);
@@ -35,15 +35,6 @@ public class ProjectileController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collider) {
         TeamAssigner teamAssigner = collider.GetComponent<TeamAssigner>();
-        ProjectileController projectile = collider.GetComponent<ProjectileController>();
-
-        if(projectile != null) {
-            if(projectile.firingTeam != firingTeam) {
-                Destroy(projectile.gameObject);
-                Destroy(gameObject);
-                return;
-            }
-        }
 
         if (collider.isTrigger || teamAssigner != null && firingTeam == teamAssigner.team) {
             return;

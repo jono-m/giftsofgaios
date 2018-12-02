@@ -16,7 +16,9 @@ MonoBehaviour:
   lifetime: 5
   launchSpeed: 10
   gravity: 0
+  hitRadius: 0
   autoTarget: 0
+  upAngleBounds: 360
   autoTargetDeltaTime: 0.1
   projectileToFirePrefab: {fileID: 114283371242858060, guid: b05e2a32397ef25479ad79163a77506f,
     type: 2}
