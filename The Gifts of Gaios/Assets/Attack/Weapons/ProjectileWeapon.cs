@@ -8,7 +8,11 @@ public class ProjectileWeapon : Weapon {
     public float launchSpeed;
     public float gravity;
 
+    public float hitRadius = 0.0f;
+
     public bool autoTarget;
+
+    public bool shootUpwards;
 
     public float autoTargetDeltaTime;
 
@@ -26,7 +30,7 @@ public class ProjectileWeapon : Weapon {
 
         if (autoTarget) {
             float sqrtTerm = Mathf.Pow(launchSpeed, 4) - gravity * (gravity * Mathf.Pow(delta.x, 2) + 2 * delta.y * Mathf.Pow(launchSpeed, 2));
-            if(sqrtTerm < 0) {
+            if (sqrtTerm < 0) {
                 // Cant reach target
                 return;
             }
@@ -41,16 +45,21 @@ public class ProjectileWeapon : Weapon {
             bool canHit2 = true;
 
             // Check if we can hit the target without a collision:
-            foreach(RaycastHit2D hit in PhysicsUtility.GravityRaycast(firePoint, fireDirection1 * launchSpeed, target, gravity, autoTargetDeltaTime)) {
-                if(hit.collider.GetComponent<AutoProjectileBlocker>() != null) {
+            foreach (RaycastHit2D hit in PhysicsUtility.GravityRaycast(firePoint, fireDirection1 * launchSpeed, target, gravity, autoTargetDeltaTime, hitRadius)) {
+                if (hit.collider.GetComponent<AutoProjectileBlocker>() != null) {
                     canHit1 = false;
                     break;
                 }
             }
-            foreach (RaycastHit2D hit in PhysicsUtility.GravityRaycast(firePoint, fireDirection2 * launchSpeed, target, gravity, autoTargetDeltaTime)) {
-                if (hit.collider.GetComponent<AutoProjectileBlocker>() != null) {
-                    canHit2 = false;
-                    break;
+
+            if (shootUpwards) {
+                canHit2 = false;
+            } else { 
+                foreach (RaycastHit2D hit in PhysicsUtility.GravityRaycast(firePoint, fireDirection2 * launchSpeed, target, gravity, autoTargetDeltaTime, hitRadius)) {
+                    if (hit.collider.GetComponent<AutoProjectileBlocker>() != null) {
+                        canHit2 = false;
+                        break;
+                    }
                 }
             }
 

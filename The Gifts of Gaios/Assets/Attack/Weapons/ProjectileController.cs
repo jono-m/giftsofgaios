@@ -18,6 +18,7 @@ public class ProjectileController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         rb.velocity += Vector2.down * weaponInfo.gravity * Time.deltaTime;
+        transform.right = rb.velocity.normalized;
         if(Time.time - spawnTime >= weaponInfo.lifetime) {
             Debug.Log("Disintegrated.");
             Destroy(gameObject);

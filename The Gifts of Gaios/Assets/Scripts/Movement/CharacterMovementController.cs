@@ -9,11 +9,18 @@ public class CharacterMovementController : MonoBehaviour {
     public float jumpForce;
     public float gravity;
 
+    public float recoverySpeed;
+    public Vector2 knockbackForce;
+
+    public float groundedDistance;
+
     public bool facingLeft { get; private set; }
 
     private bool isGrounded = false;
 
     private bool usedDoubleJump = false;
+
+    private bool isKnockedBack = false;
 
     private Rigidbody2D rb;
 
@@ -25,25 +32,42 @@ public class CharacterMovementController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float hVelocity = 0.0f;
-	    if(Input.GetKey(KeyCode.A)) {
-            hVelocity -= movementSpeed;
-            facingLeft = true;
-        }
 
-        if (Input.GetKey(KeyCode.D)) {
-            hVelocity += movementSpeed;
-            facingLeft = false;
-        }
+        if (isKnockedBack) {
+            if (rb.velocity.magnitude <= recoverySpeed) {
+                isKnockedBack = false;
+            } else {
+                hVelocity = rb.velocity.x;
+            }
+        } else {
+            if (Input.GetKey(KeyCode.A)) {
+                hVelocity -= movementSpeed;
+                facingLeft = true;
+            }
 
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            DoJump();
-        }
+            if (Input.GetKey(KeyCode.D)) {
+                hVelocity += movementSpeed;
+                facingLeft = false;
+            }
 
-        if(!isGrounded) {
-            hVelocity *= airMovementSpeed;
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                DoJump();
+            }
+
+            if (!isGrounded) {
+                hVelocity *= airMovementSpeed;
+            }
         }
 
         rb.velocity = new Vector2(hVelocity, rb.velocity.y - gravity * Time.deltaTime);
+
+        isGrounded = false;
+        foreach(RaycastHit2D hit in Physics2D.RaycastAll(transform.position, Vector2.down, groundedDistance)) {
+            if (hit.collider.GetComponent<JumpResetter>() != null) {
+                isGrounded = true;
+                usedDoubleJump = false;
+            }
+        }
     }
 
     private void DoJump() {
@@ -57,10 +81,16 @@ public class CharacterMovementController : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.collider.GetComponent<JumpResetter>() != null) {
-            isGrounded = true;
-            usedDoubleJump = false;
-        }
+    public void DoKnockback() {
+        isKnockedBack = true;
+
+        Vector2 force = new Vector2(knockbackForce.x * (facingLeft ? 1.0f : -1.0f), knockbackForce.y);
+
+        rb.AddForce(force, ForceMode2D.Impulse);
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundedDistance);
     }
 }
