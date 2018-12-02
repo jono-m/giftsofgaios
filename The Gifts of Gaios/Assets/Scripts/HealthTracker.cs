@@ -20,7 +20,7 @@ public class HealthTracker : MonoBehaviour {
     }
 
     public void TakeDamage(float damage) {
-        if (Time.time - lastDamageTakenTime >= invulnerabilityTime) {
+        if (Time.time - lastDamageTakenTime >= invulnerabilityTime || damage == Mathf.Infinity) {
             currentHealth -= damage;
             if (currentHealth <= 0) {
                 OnDie.Invoke();

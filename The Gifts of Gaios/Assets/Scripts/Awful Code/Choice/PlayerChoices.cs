@@ -35,7 +35,21 @@ public class PlayerChoices : Singleton<PlayerChoices> {
     }
 
     public void FinishedChoosing() {
-        SceneManager.LoadScene("Level " + currentLevel);
+        SceneManager.LoadScene("Loading");
+        StartCoroutine(LoadNewScene());
+    }
+
+    // The coroutine runs on its own at the same time as Update() and takes an integer indicating which scene to load.
+    IEnumerator LoadNewScene() {
+        yield return new WaitForSeconds(1.0f);
+        // Start an asynchronous operation to load the scene that was passed to the LoadNewScene coroutine.
+        AsyncOperation async = SceneManager.LoadSceneAsync("Level " + currentLevel);
+
+        // While the asynchronous operation to load the new scene is not yet complete, continue waiting until it's done.
+        while (!async.isDone) {
+            yield return null;
+        }
+
     }
 
     public void SacrificeSelf() {

@@ -35,6 +35,15 @@ public class ProjectileController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collider) {
         TeamAssigner teamAssigner = collider.GetComponent<TeamAssigner>();
+        ProjectileController projectile = collider.GetComponent<ProjectileController>();
+
+        if (projectile != null) {
+            if (projectile.firingTeam != firingTeam) {
+                Destroy(projectile.gameObject);
+                Destroy(gameObject);
+                return;
+            }
+        }
 
         if (collider.isTrigger || teamAssigner != null && firingTeam == teamAssigner.team) {
             return;
