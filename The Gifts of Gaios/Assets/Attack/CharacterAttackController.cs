@@ -9,6 +9,8 @@ public class CharacterAttackController : MonoBehaviour {
 
     public Transform attackBasePoint;
 
+    public bool canAttack = false;
+
     private float lastWeaponUseTime = Mathf.NegativeInfinity;
 
     public bool IsWeaponOnCooldown() {
@@ -31,6 +33,9 @@ public class CharacterAttackController : MonoBehaviour {
 	}
 
     public void Attack(Vector2 target) {
+        if(!canAttack) {
+            return;
+        }
         if(weapon != null && !IsWeaponOnCooldown()) {
             weapon.Use(this, target);
             lastWeaponUseTime = Time.time;
@@ -40,6 +45,7 @@ public class CharacterAttackController : MonoBehaviour {
     private void OnDrawGizmos() {
         if(behavior != null) {
             behavior.DrawAttackGizmos(this);
+            weapon.DrawAttackGizmos(this);
         }
     }
 }

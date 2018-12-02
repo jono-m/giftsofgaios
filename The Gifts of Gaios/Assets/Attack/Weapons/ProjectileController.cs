@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class ProjectileController : MonoBehaviour {
-    private Team firingTeam;
+    public Team firingTeam { get; private set; }
     private Rigidbody2D rb;
     private float spawnTime;
 
@@ -15,12 +15,10 @@ public class ProjectileController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();	
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         rb.velocity += Vector2.down * weaponInfo.gravity * Time.deltaTime;
         transform.right = rb.velocity.normalized;
-        if(Time.time - spawnTime >= weaponInfo.lifetime) {
-            Debug.Log("Disintegrated.");
+        if(Time.fixedTime - spawnTime >= weaponInfo.lifetime) {
             Destroy(gameObject);
         }
 	}
@@ -37,10 +35,19 @@ public class ProjectileController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collider) {
         TeamAssigner teamAssigner = collider.GetComponent<TeamAssigner>();
-        if (collider.isTrigger || (teamAssigner != null && firingTeam == teamAssigner.team)) {
+        ProjectileController projectile = collider.GetComponent<ProjectileController>();
+
+        if(projectile != null) {
+            if(projectile.firingTeam != firingTeam) {
+                Destroy(projectile.gameObject);
+                Destroy(gameObject);
+                return;
+            }
+        }
+
+        if (collider.isTrigger || teamAssigner != null && firingTeam == teamAssigner.team) {
             return;
         } else {
-            Debug.Log("Hit " + collider);
             HealthTracker healthTracker = collider.GetComponent<HealthTracker>();
             if (healthTracker != null) {
                 healthTracker.TakeDamage(weaponInfo.damage);

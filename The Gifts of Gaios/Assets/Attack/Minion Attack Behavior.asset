@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4682b966e5ef44c4db7da31521650381, type: 3}
   m_Name: Minion Attack Behavior
   m_EditorClassIdentifier: 
-  attackRadius: 6
+  attackRadius: 4

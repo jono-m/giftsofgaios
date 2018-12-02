@@ -7,4 +7,5 @@ public abstract class Weapon : ScriptableObject {
     public float damage;
 
     public abstract void Use(CharacterAttackController attackController, Vector2 target);
+    public virtual void DrawAttackGizmos(CharacterAttackController controller) { }
 }

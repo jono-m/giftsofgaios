@@ -7,20 +7,28 @@ public class CharacterMovementController : MonoBehaviour {
     public float movementSpeed;
     public float airMovementSpeed;
     public float jumpForce;
+    public float jumpHangForce;
+    public float jumpDecayRate;
     public float gravity;
 
-    public float recoverySpeed;
+    public float dashSpeed;
+    public float dashDistance;
+
+    public float recoveryTime;
     public Vector2 knockbackForce;
 
     public float groundedDistance;
 
     public bool facingLeft { get; private set; }
+    
+    public bool infinityJump = false;
+    public bool canDash = false;
 
-    private bool isGrounded = false;
-
-    private bool usedDoubleJump = false;
+    private bool hanging = false;
+    private float hangStrength = 0.0f;
 
     private bool isKnockedBack = false;
+    private float knockbackTime = Mathf.NegativeInfinity;
 
     private Rigidbody2D rb;
 
@@ -34,7 +42,7 @@ public class CharacterMovementController : MonoBehaviour {
         float hVelocity = 0.0f;
 
         if (isKnockedBack) {
-            if (rb.velocity.magnitude <= recoverySpeed) {
+            if (Time.time - knockbackTime >= recoveryTime) {
                 isKnockedBack = false;
             } else {
                 hVelocity = rb.velocity.x;
@@ -50,42 +58,66 @@ public class CharacterMovementController : MonoBehaviour {
                 facingLeft = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                DoJump();
+            DoJump();
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash) {
+                Vector2 moveDirection = (facingLeft ? Vector2.left : Vector2.right);
+                float moveDistance = dashDistance;
+                foreach (RaycastHit2D hit in Physics2D.RaycastAll(transform.position, moveDirection.normalized, dashDistance)) {
+                    if (!hit.collider.isTrigger && hit.collider.gameObject != gameObject) {
+                        moveDistance = Mathf.Min(moveDistance, hit.distance);
+                        break;
+                    }
+                }
+                rb.MovePosition((Vector2)transform.position + moveDirection * moveDistance);
             }
 
-            if (!isGrounded) {
+            if (!IsGrounded()) {
                 hVelocity *= airMovementSpeed;
             }
         }
 
         rb.velocity = new Vector2(hVelocity, rb.velocity.y - gravity * Time.deltaTime);
-
-        isGrounded = false;
-        foreach(RaycastHit2D hit in Physics2D.RaycastAll(transform.position, Vector2.down, groundedDistance)) {
-            if (hit.collider.GetComponent<JumpResetter>() != null) {
-                isGrounded = true;
-                usedDoubleJump = false;
-            }
-        }
     }
 
-    private void DoJump() {
-        if(isGrounded || !usedDoubleJump) {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            if (!isGrounded) {
-                usedDoubleJump = true;
-            } else {
-                isGrounded = false;
+    private bool IsGrounded() {
+        foreach (RaycastHit2D hit in Physics2D.RaycastAll(transform.position, Vector2.down, groundedDistance)) {
+            if (hit.collider.GetComponent<JumpResetter>() != null) {
+                return true;
             }
+        }
+        return false;
+    }
+    private void DoJump() {
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            bool canJump = false;
+            if (IsGrounded() || infinityJump) {
+                canJump = true;
+            }
+            if (canJump) {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                hangStrength = jumpHangForce;
+                hanging = true;
+            }
+        }
+
+        if(Input.GetKeyUp(KeyCode.Space)) {
+            hanging = false;
+        }
+
+        if(hanging) {
+            rb.velocity += Vector2.up * hangStrength * Time.deltaTime;
+            hangStrength = Mathf.Clamp(hangStrength - Time.deltaTime * jumpDecayRate * hangStrength, 0.0f, Mathf.Infinity);
         }
     }
 
     public void DoKnockback() {
         isKnockedBack = true;
+        knockbackTime = Time.time;
 
         Vector2 force = new Vector2(knockbackForce.x * (facingLeft ? 1.0f : -1.0f), knockbackForce.y);
 
+        rb.velocity = Vector2.zero;
         rb.AddForce(force, ForceMode2D.Impulse);
     }
 

@@ -230,10 +230,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 5
   airMovementSpeed: 0.7
-  jumpForce: 9
+  jumpForce: 1
+  jumpHangForce: 180
+  jumpDecayRate: 13
   gravity: 9.8
-  recoverySpeed: 0.1
-  knockbackForce: {x: 0, y: 0}
+  dashSpeed: 0
+  dashDistance: 2
+  recoveryTime: 1
+  knockbackForce: {x: 1, y: 2}
+  groundedDistance: 0.51
+  infinityJump: 0
+  canDash: 1
 --- !u!114 &114410714147479972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,9 +253,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  invulnerabilityTime: 2
   OnDamageTaken:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114362889916512018}
+        m_MethodName: DoKnockback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114583020047338046

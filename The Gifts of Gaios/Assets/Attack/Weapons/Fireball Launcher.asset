@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: Fireball Launcher
   m_EditorClassIdentifier: 
   cooldown: 1
-  damage: 0
+  damage: 5
   lifetime: 3
   launchSpeed: 8
   gravity: 9
   hitRadius: 0.15
   autoTarget: 1
-  shootUpwards: 1
+  upAngleBounds: 0.73
   autoTargetDeltaTime: 0.05
   projectileToFirePrefab: {fileID: 114283371242858060, guid: d6442fa20df9cc44c93e19bcaf6b4eef,
     type: 2}

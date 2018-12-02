@@ -12,7 +12,7 @@ public class ProjectileWeapon : Weapon {
 
     public bool autoTarget;
 
-    public bool shootUpwards;
+    public float upAngleBounds;
 
     public float autoTargetDeltaTime;
 
@@ -45,14 +45,18 @@ public class ProjectileWeapon : Weapon {
             bool canHit2 = true;
 
             // Check if we can hit the target without a collision:
-            foreach (RaycastHit2D hit in PhysicsUtility.GravityRaycast(firePoint, fireDirection1 * launchSpeed, target, gravity, autoTargetDeltaTime, hitRadius)) {
-                if (hit.collider.GetComponent<AutoProjectileBlocker>() != null) {
-                    canHit1 = false;
-                    break;
+            if (Vector2.Angle(attackController.transform.up, fireDirection1) * Mathf.Deg2Rad > upAngleBounds) {
+                canHit1 = false;
+            } else {
+                foreach (RaycastHit2D hit in PhysicsUtility.GravityRaycast(firePoint, fireDirection1 * launchSpeed, target, gravity, autoTargetDeltaTime, hitRadius)) {
+                    if (hit.collider.GetComponent<AutoProjectileBlocker>() != null) {
+                        canHit1 = false;
+                        break;
+                    }
                 }
             }
 
-            if (shootUpwards) {
+            if (Vector2.Angle(attackController.transform.up, fireDirection2) * Mathf.Deg2Rad > upAngleBounds) {
                 canHit2 = false;
             } else { 
                 foreach (RaycastHit2D hit in PhysicsUtility.GravityRaycast(firePoint, fireDirection2 * launchSpeed, target, gravity, autoTargetDeltaTime, hitRadius)) {
@@ -87,5 +91,17 @@ public class ProjectileWeapon : Weapon {
 
         ProjectileController newProjectile = Instantiate(projectileToFirePrefab.gameObject).GetComponent<ProjectileController>();
         newProjectile.Fire(firePoint, fireDirection, firingTeam, this);
+    }
+
+    public override void DrawAttackGizmos(CharacterAttackController controller) {
+        base.DrawAttackGizmos(controller);
+        Gizmos.DrawLine(controller.transform.position, (Vector2)controller.transform.position + RotateVector(controller.transform.up, upAngleBounds));
+        Gizmos.DrawLine(controller.transform.position, (Vector2)controller.transform.position + RotateVector(controller.transform.up, -upAngleBounds));
+    }
+
+    public Vector2 RotateVector(Vector2 v, float angle) {
+        float _x = v.x * Mathf.Cos(angle) - v.y * Mathf.Sin(angle);
+        float _y = v.x * Mathf.Sin(angle) + v.y * Mathf.Cos(angle);
+        return new Vector2(_x, _y);
     }
 }
