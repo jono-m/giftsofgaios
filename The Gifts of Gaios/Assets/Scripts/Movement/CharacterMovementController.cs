@@ -58,7 +58,7 @@ public class CharacterMovementController : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.collider.CompareTag("Floor")) {
+        if(collision.collider.GetComponent<JumpResetter>() != null) {
             isGrounded = true;
             usedDoubleJump = false;
         }
