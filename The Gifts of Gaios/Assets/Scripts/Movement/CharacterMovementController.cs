@@ -131,6 +131,10 @@ public class CharacterMovementController : MonoBehaviour {
     }
 
     public void DoKnockback() {
+        if(isKnockedBack) {
+            return;
+        }
+
         isKnockedBack = true;
         knockbackTime = Time.time;
 

@@ -14,7 +14,7 @@ public class TurnAroundCollider : MonoBehaviour {
         myCollider = GetComponent<Collider2D>();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if(!turnAroundOnCollision) {
             Collider2D[] colliders = new Collider2D[10];
             int nColl = myCollider.OverlapCollider(new ContactFilter2D(), colliders);
@@ -32,7 +32,7 @@ public class TurnAroundCollider : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(turnAroundOnCollision && collision.GetComponent<GaiosChoiceApplier>() == null) {
+        if(!collision.isTrigger && turnAroundOnCollision && collision.GetComponent<GaiosChoiceApplier>() == null && collision.gameObject != transform.parent.gameObject) {
             ShouldTurnAround.Invoke();
         }
     }

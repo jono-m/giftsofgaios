@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  invulnerabilityTime: 2
+  invulnerabilityTime: 0.5
   OnDamageTaken:
     m_PersistentCalls:
       m_Calls:
