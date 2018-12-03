@@ -293,6 +293,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1757195006327148, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
+      propertyPath: m_Name
+      value: Minion (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 114013344999855464, guid: a407c4c66f8aaf44d9693728867fd620,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -302,10 +306,6 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1757195006327148, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
-      propertyPath: m_Name
-      value: Minion (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
@@ -1388,6 +1388,10 @@ Prefab:
     - target: {fileID: 1757195006327148, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
       propertyPath: m_Name
       value: Minion (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1633133193363076, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}

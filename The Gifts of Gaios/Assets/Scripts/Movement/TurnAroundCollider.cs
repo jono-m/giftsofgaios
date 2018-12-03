@@ -16,14 +16,13 @@ public class TurnAroundCollider : MonoBehaviour {
 
     private void FixedUpdate() {
         if(!turnAroundOnCollision) {
-            Collider2D[] colliders = new Collider2D[10];
-            int nColl = myCollider.OverlapCollider(new ContactFilter2D(), colliders);
-
+            Bounds colliderBounds = myCollider.bounds;
             bool seesGround = false;
-            for (int i = 0; i < nColl; i++) {
-                if(colliders[i].gameObject.isStatic) {
+            foreach (Collider2D hit in Physics2D.OverlapAreaAll(colliderBounds.min, colliderBounds.max)) {
+                if (hit.gameObject.name == "Tilemap") {
                     seesGround = true;
-                }       
+                    break;
+                }
             }
             if(!seesGround) {
                 ShouldTurnAround.Invoke();
