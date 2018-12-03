@@ -25,7 +25,7 @@ public class Dialog : MonoBehaviour {
 
     public void Advance() {
         currentNumber++;
-        if(currentNumber == dialogBlocks.Count-1) {
+        if(currentNumber >= dialogBlocks.Count) {
             OnDialogDone.Invoke();
         }
     }

@@ -4,10 +4,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class NextLevelDetector : MonoBehaviour {
+    public UnityEvent ReachedEndOfLevel;
+
     private void OnTriggerEnter2D(Collider2D collision) {
         NextLevelRegion region = collision.GetComponent<NextLevelRegion>();
         if(region != null) {
-            PlayerChoices.Instance.ReachedEndOfLevel();
+            ReachedEndOfLevel.Invoke();
         }
+    }
+
+    public void DoNextLevel() {
+        PlayerChoices.Instance.ReachedEndOfLevel();
     }
 }

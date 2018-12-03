@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.2
   damage: 10
-  lifetime: 5
+  lifetime: 2
   launchSpeed: 10
   gravity: 0
   hitRadius: 0

@@ -8,8 +8,10 @@ public class ChoiceItem : MonoBehaviour {
     public string choiceDescription;
 
     public TextMeshProUGUI nameField;
+    public TextMeshProUGUI descriptionField;
 
     private void Start() {
         nameField.text = choiceName;
+        descriptionField.text = choiceDescription;
     }
 }

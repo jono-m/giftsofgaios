@@ -11,31 +11,37 @@ public class ChoiceListSpawner : MonoBehaviour {
         if(PlayerChoices.Instance.canDash) {
             ChoiceItem newItem = Instantiate(itemPrefab.gameObject, transform).GetComponent<ChoiceItem>();
             newItem.choiceName = "Agility";
+            newItem.choiceDescription = "Your ability to teleport.";
         }
 
         if (PlayerChoices.Instance.canInfiniJump) {
             ChoiceItem newItem = Instantiate(itemPrefab.gameObject, transform).GetComponent<ChoiceItem>();
             newItem.choiceName = "Flight";
+            newItem.choiceDescription = "Your ability to fly.";
         }
 
         if (PlayerChoices.Instance.canSlowTime) {
             ChoiceItem newItem = Instantiate(itemPrefab.gameObject, transform).GetComponent<ChoiceItem>();
             newItem.choiceName = "Reflex";
+            newItem.choiceDescription = "Your ability to slow down time.";
         }
 
         if (PlayerChoices.Instance.canAttack) {
             ChoiceItem newItem = Instantiate(itemPrefab.gameObject, transform).GetComponent<ChoiceItem>();
             newItem.choiceName = "Strength";
+            newItem.choiceDescription = "Your ability to attack.";
         }
 
         if (PlayerChoices.Instance.hasFullVision) {
             ChoiceItem newItem = Instantiate(itemPrefab.gameObject, transform).GetComponent<ChoiceItem>();
             newItem.choiceName = "Perception";
+            newItem.choiceDescription = "Your ability to see far.";
         }
 
         if(transform.childCount == 0) {
             ChoiceItem newItem = Instantiate(itemPrefab.gameObject, transform).GetComponent<ChoiceItem>();
             newItem.choiceName = "Resilience";
+            newItem.choiceDescription = "Your spirit.";
         }
 
         ToggleGroup group = GetComponent<ToggleGroup>();
