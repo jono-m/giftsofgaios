@@ -261,7 +261,7 @@ MonoBehaviour:
   slowedTimeLerp: 5
   dashSpeed: 0
   dashDistance: 2
-  recoveryTime: 1
+  recoveryTime: 0.5
   knockbackForce: {x: 1, y: 2}
   groundedDistance: 0.51
   infinityJump: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  invulnerabilityTime: 0.5
+  invulnerabilityTime: 1
   OnDamageTaken:
     m_PersistentCalls:
       m_Calls:

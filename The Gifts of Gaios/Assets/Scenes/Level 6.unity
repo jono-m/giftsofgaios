@@ -577,6 +577,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1757195006327148, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
+      propertyPath: m_Name
+      value: Minion (5)
+      objectReference: {fileID: 0}
     - target: {fileID: 114013344999855464, guid: a407c4c66f8aaf44d9693728867fd620,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -586,10 +590,6 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1757195006327148, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
-      propertyPath: m_Name
-      value: Minion (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
@@ -58047,42 +58047,6 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 63, y: 28, z: 0}
-    second:
-      m_TileIndex: 0
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 1
-      m_ObjectToInstantiate: {fileID: 0}
-      m_TileFlags: 1
-      m_ColliderType: 1
-  - first: {x: 64, y: 28, z: 0}
-    second:
-      m_TileIndex: 0
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 1
-      m_ObjectToInstantiate: {fileID: 0}
-      m_TileFlags: 1
-      m_ColliderType: 1
-  - first: {x: 65, y: 28, z: 0}
-    second:
-      m_TileIndex: 0
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 1
-      m_ObjectToInstantiate: {fileID: 0}
-      m_TileFlags: 1
-      m_ColliderType: 1
-  - first: {x: 66, y: 28, z: 0}
-    second:
-      m_TileIndex: 0
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 1
-      m_ObjectToInstantiate: {fileID: 0}
-      m_TileFlags: 1
-      m_ColliderType: 1
   - first: {x: 67, y: 28, z: 0}
     second:
       m_TileIndex: 0
@@ -69839,15 +69803,15 @@ Tilemap:
       m_ColliderType: 1
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 7624
+  - m_RefCount: 7620
     m_Data: {fileID: 11400000, guid: 6eff90f7a24fcd04eb15b1f16e786565, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 7624
+  - m_RefCount: 7620
     m_Data: {fileID: 21300000, guid: 600546042486e264faff5d60b81d7c98, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 7624
+  - m_RefCount: 7620
     m_Data:
       e00: 1
       e01: 0
@@ -69868,7 +69832,7 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 2.66981e-40, g: 2.66981e-40, b: 2.66981e-40, a: 2.66981e-40}
-  - m_RefCount: 7624
+  - m_RefCount: 7620
     m_Data: {r: 0.11320752, g: 0, b: 0, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -70021,6 +69985,14 @@ CompositeCollider2D:
         Y: 95000000
       - X: 260000000
         Y: 140000000
+      - X: 315000000
+        Y: 140000000
+      - X: 315000000
+        Y: 145000000
+      - X: 335000000
+        Y: 145000000
+      - X: 335000000
+        Y: 140000000
       - X: 435000000
         Y: 140000000
       - X: 435000000
@@ -70159,6 +70131,10 @@ CompositeCollider2D:
       - {x: 30.5, y: 9.5}
       - {x: 26, y: 9.5}
       - {x: 26, y: 14}
+      - {x: 31.5, y: 14}
+      - {x: 31.5, y: 14.5}
+      - {x: 33.5, y: 14.5}
+      - {x: 33.5, y: 14}
       - {x: 43.5, y: 14}
       - {x: 43.5, y: 11.5}
       - {x: 48.5, y: 11.5}
@@ -70456,12 +70432,12 @@ Prefab:
     - target: {fileID: 114013344999855464, guid: a407c4c66f8aaf44d9693728867fd620,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114013344999855464, guid: a407c4c66f8aaf44d9693728867fd620,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1757195006327148, guid: a407c4c66f8aaf44d9693728867fd620, type: 2}
       propertyPath: m_Name
